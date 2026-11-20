@@ -1,0 +1,24 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app:ro
+    networks:
+      budka:
+
+  k6:
+    image: grafana/k6:2.4.0
+    profiles: [load]
+    command: ["run", "/scripts/rate-limiter.js"]
+    environment:
+      TARGET_URL: ${TARGET_URL:-http://app:8000/check}
+    volumes:
+      - ./k6:/scripts:ro
+    networks:
+      budka:
+
+
+networks:
+  budka:

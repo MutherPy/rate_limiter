@@ -1,0 +1,4 @@
+
+StrategyRegistry: dict = {}
+
+StrategyConfigRegistry: dict = {}
